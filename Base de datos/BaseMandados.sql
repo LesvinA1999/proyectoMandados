@@ -1,6 +1,8 @@
+CREATE DATABASE  IF NOT EXISTS `mandaditos` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `mandaditos`;
 -- MySQL dump 10.13  Distrib 8.0.28, for Win64 (x86_64)
 --
--- Host: localhost    Database: base_mandados
+-- Host: localhost    Database: mandaditos
 -- ------------------------------------------------------
 -- Server version	8.0.28
 
@@ -54,11 +56,8 @@ CREATE TABLE `comercio` (
   `IdComercio` int NOT NULL AUTO_INCREMENT,
   `NombreComercio` varchar(250) NOT NULL,
   `IdTipoComercio` int NOT NULL,
-  `IdProductos` int NOT NULL,
   PRIMARY KEY (`IdComercio`),
   KEY `IdTipoComercio_idx` (`IdTipoComercio`),
-  KEY `IdProductos_idx` (`IdProductos`),
-  CONSTRAINT `IdProductos` FOREIGN KEY (`IdProductos`) REFERENCES `productoscomercio` (`IdProductos`),
   CONSTRAINT `IdTipoComercio` FOREIGN KEY (`IdTipoComercio`) REFERENCES `tipocomercio` (`IdTipoComercio`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -190,9 +189,10 @@ DROP TABLE IF EXISTS `pedidos`;
 CREATE TABLE `pedidos` (
   `IdPedido` int NOT NULL AUTO_INCREMENT,
   `IdCliente` int NOT NULL,
-  `FechaPedido` datetime NOT NULL,
+  `precioEnvio` smallint DEFAULT NULL,
   `IdEmpleado` int NOT NULL,
   `IdDetallePedido` int NOT NULL,
+  `FechaPedido` datetime NOT NULL,
   `EstadoPedido` tinyint NOT NULL,
   PRIMARY KEY (`IdPedido`),
   KEY `IdDetallePedido_idx` (`IdDetallePedido`),
@@ -223,9 +223,13 @@ DROP TABLE IF EXISTS `productoscomercio`;
 CREATE TABLE `productoscomercio` (
   `IdProductos` int NOT NULL AUTO_INCREMENT,
   `NombreProducto` varchar(250) NOT NULL,
+  `descripcion` varchar(300) NOT NULL,
   `CategoriaProducto` varchar(200) NOT NULL,
-  `IngredientesProductos` varchar(300) NOT NULL,
-  PRIMARY KEY (`IdProductos`)
+  `IdComercio` int NOT NULL,
+  `precio` smallint NOT NULL,
+  PRIMARY KEY (`IdProductos`),
+  KEY `comercioProductos_idx` (`IdComercio`),
+  CONSTRAINT `comercioProductos` FOREIGN KEY (`IdComercio`) REFERENCES `comercio` (`IdComercio`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -320,4 +324,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-18 19:17:58
+-- Dump completed on 2022-02-19 11:55:17
