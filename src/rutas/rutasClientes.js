@@ -1,5 +1,5 @@
 const {Router} = require('express');
-const controladorClientes = require('../controladores/controladorCliente');
+const controladorClientes = require('../controladores/controladorClientes');
 const router = Router();
 
 router.get('/', controladorClientes.Inicio);

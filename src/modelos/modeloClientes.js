@@ -20,6 +20,10 @@ const Cliente = db.define(
         Telefono:{
             type: sequelize.STRING(45),
             allowNull: false,
+        },
+        IdDireccion:{
+            type: sequelize.INTEGER,
+            allowNull: false,
         }
     },
     {

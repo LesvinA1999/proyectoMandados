@@ -17,7 +17,7 @@ exports.listarClientes = async (req, res) =>{
 };
 
 exports.guardar = async (req, res) =>{
-    const{Nombre, Apellido, Telefono} = req.body;
+    const{Nombre, Apellido, Telefono, IdDireccion} = req.body;
     if(!Nombre || !Apellido){
         res.send("Ingrese los datos requeridos");
     }
@@ -25,12 +25,14 @@ exports.guardar = async (req, res) =>{
         await ModeloCliente.create({
             Nombre: Nombre,
             Apellido: Apellido,
-            Telefono: Telefono
+            Telefono: Telefono,
+            IdDireccion: IdDireccion
         })
         .then((data)=>{
             console.log(data);
             res.send("Registro almacenado");
         })
+        
         .catch((error)=>{
             console.log(error);
             res.send("Error al guardar los datos");
@@ -40,8 +42,8 @@ exports.guardar = async (req, res) =>{
 
 exports.modificar = async (req, res) =>{
     const {Id} = req.query;
-    const {Nombre, Apellido, Telefono} = req.body;
-    if(!Id || !Nombre || !Apellido || !Telefono){
+    const {Nombre, Apellido, Telefono, IdDireccion} = req.body;
+    if(!Id || !Nombre || !Apellido || !Telefono || !IdDireccion){
         res.send("Ingrese datos completos");
     }
     else{
@@ -57,6 +59,7 @@ exports.modificar = async (req, res) =>{
             buscarCliente.Nombre=Nombre;
             buscarCliente.Apellido=Apellido;
             buscarCliente.Telefono=Telefono;
+            buscarCliente.IdDireccion=IdDireccion;
 
             await buscarCliente.save()
             .then((data)=>{
