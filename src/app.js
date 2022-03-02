@@ -5,10 +5,8 @@ app.use(morgan('dev'));
 app.use(express.urlencoded({extended:false}));
 app.use(express.json());
 app.set('json spaces', 2);
-app.use('/', (req, res) => {
-    console.log("Hola");
-    res.send("Hola usuario");
-});
+
+app.use('/api/clientes', require('./rutas/rutasClientes'));
 app.listen(7000, () => {
     console.log("Servidor iniciado en el puerto 7000");
 });

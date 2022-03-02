@@ -3,28 +3,23 @@ const db = require('../configuraciones/db');
 const Cliente = db.define(
     "clientes",
     {
-        id:{
+        Id:{
             type:sequelize.INTEGER,
             primaryKey: true,
             autoIncrement: true,
             allowNull: false,
         },
-        rtn:{
-            type: sequelize.STRING(20),
-            allowNull: true,
-        },
-        nombre:{
+        Nombre:{
             type: sequelize.STRING(45),
             allowNull: false,
         },
-        apellido:{
+        Apellido:{
             type: sequelize.STRING(45),
             allowNull: false,
         },
-        estado:{
-            type: sequelize.BOOLEAN,
-            allowNull: true,
-            defaultValue: true,
+        Telefono:{
+            type: sequelize.STRING(45),
+            allowNull: false,
         }
     },
     {
