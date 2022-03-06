@@ -1,4 +1,4 @@
-const {Router} = require('express');
+const { Router } = require('express');
 const controladorClientes = require('../controladores/controladorClientes');
 const router = Router();
 
@@ -7,4 +7,4 @@ router.get('/listar', controladorClientes.listarClientes);
 router.post('/guardar', controladorClientes.guardar);
 router.put('/modificar', controladorClientes.modificar);
 router.delete('/eliminar', controladorClientes.eliminar);
-module.exports=router;
+module.exports = router;

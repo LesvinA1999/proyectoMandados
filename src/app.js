@@ -1,14 +1,13 @@
 const express = require('express');
 const morgan = require('morgan');
-const rutas = require("./rutas");
+
 const app = express();
 app.use(morgan('dev'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 app.set('json spaces', 2);
 
-app.use("/api/", rutas);
-app.use('/api/clientes', require('./rutas/rutasClientes'));
+app.use("/api/clientes", require("./rutas/rutasClientes"));
 app.use("/api/personas", require("./rutas/rutasTipoUsuarios"));
 app.listen(7000, () => {
     console.log("Servidor iniciado en el puerto 7000");
