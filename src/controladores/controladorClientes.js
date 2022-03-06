@@ -2,110 +2,103 @@ const { request } = require('express');
 const { is } = require('express/lib/request');
 const ModeloCliente = require('../modelos/modeloClientes');
 
-exports.Inicio = (req, res) =>{
+exports.Inicio = (req, res) => {
     res.send("Modulo de clientes pryecto programacion movil II");
 };
 
-exports.listarClientes = async (req, res) =>{
+exports.listarClientes = async(req, res) => {
     const listaCliente = await ModeloCliente.findAll();
-    if(listaCliente.length==0){
+    if (listaCliente.length == 0) {
         res.send("No existen datos almacenados");
-    }
-    else{
+    } else {
         res.json(listaCliente);
     }
 };
 
-exports.guardar = async (req, res) =>{
-    const{Nombre, Apellido, Telefono, IdDireccion} = req.body;
-    if(!Nombre || !Apellido){
+exports.guardar = async(req, res) => {
+    const { NombreCliente, ApellidoCliente, TelefonoCliente, IdDireccion } = req.body;
+    if (!NombreCliente || !ApellidoCliente) {
         res.send("Ingrese los datos requeridos");
-    }
-    else{
+    } else {
         await ModeloCliente.create({
-            Nombre: Nombre,
-            Apellido: Apellido,
-            Telefono: Telefono,
-            IdDireccion: IdDireccion
-        })
-        .then((data)=>{
-            console.log(data);
-            res.send("Registro almacenado");
-        })
-        
-        .catch((error)=>{
+                NombreCliente: NombreCliente,
+                ApellidoCliente: ApellidoCliente,
+                TelefonoCliente: TelefonoCliente,
+                IdDireccion: IdDireccion
+            })
+            .then((data) => {
+                console.log(data);
+                res.send("Registro almacenado");
+            })
+
+        .catch((error) => {
             console.log(error);
             res.send("Error al guardar los datos");
         });
     }
 };
 
-exports.modificar = async (req, res) =>{
-    const {Id} = req.query;
-    const {Nombre, Apellido, Telefono, IdDireccion} = req.body;
-    if(!Id || !Nombre || !Apellido || !Telefono || !IdDireccion){
+exports.modificar = async(req, res) => {
+    const { IdCliente } = req.query;
+    const { NombreCliente, ApellidoCliente, TelefonoCliente, IdDireccion } = req.body;
+    if (!IdCliente || !NombreCliente || !ApellidoCliente || !TelefonoCliente || !IdDireccion) {
         res.send("Ingrese datos completos");
-    }
-    else{
+    } else {
         var buscarCliente = await ModeloCliente.findOne({
-            where:{
-                Id:Id, 
+            where: {
+                IdCliente: IdCliente,
             }
         });
-        if(!buscarCliente){
+        if (!buscarCliente) {
             res.send("No existe id");
-        }
-        else{
-            buscarCliente.Nombre=Nombre;
-            buscarCliente.Apellido=Apellido;
-            buscarCliente.Telefono=Telefono;
-            buscarCliente.IdDireccion=IdDireccion;
+        } else {
+            buscarCliente.NombreCliente = NombreCliente;
+            buscarCliente.ApellidoCliente = ApellidoCliente;
+            buscarCliente.TelefonoCliente = TelefonoCliente;
+            buscarCliente.IdDireccion = IdDireccion;
 
             await buscarCliente.save()
-            .then((data)=>{
-                console.log(data);
-                res.send("registro modificado");
-            })
-            .catch((error)=>{
-                console.log(error);
-                res.send("Error al modificar los datos");
-            });
+                .then((data) => {
+                    console.log(data);
+                    res.send("registro modificado");
+                })
+                .catch((error) => {
+                    console.log(error);
+                    res.send("Error al modificar los datos");
+                });
         }
     }
 };
 
-exports.eliminar = async (req, res) =>{
-    const {Id} = req.query;
-    if(!Id){
+exports.eliminar = async(req, res) => {
+    const { IdCliente } = req.query;
+    if (!IdCliente) {
         res.send("Ingrese id de registro");
-    }
-    else{
+    } else {
         var buscarCliente = await ModeloCliente.findOne({
-            where:{
-                Id:Id, 
+            where: {
+                IdCliente: IdCliente,
             }
         });
-        if(!buscarCliente){
+        if (!buscarCliente) {
             res.send("No existe id");
-        }
-        else{
+        } else {
             await ModeloCliente.destroy({
-                where: 
-                {
-                    Id:Id,
-                }               
-            })
-            .then((data)=>{
-                console.log(data);
-                if (data == 0){
-                    res.send("registro eliminado");
-                }
-                
-            })
-            .catch((error)=>{
-                console.log(error);
-                res.send("Error al eliminar los datos");
-            });
+                    where: {
+                        IdCliente: IdCliente,
+                    }
+                })
+                .then((data) => {
+                    console.log(data);
+                    if (data == 0) {
+                        res.send("registro eliminado");
+                    }
+
+                })
+                .catch((error) => {
+                    console.log(error);
+                    res.send("Error al eliminar los datos");
+                });
         }
     }
 };

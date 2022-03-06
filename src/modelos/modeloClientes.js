@@ -1,34 +1,32 @@
 const sequelize = require('sequelize');
 const db = require('../configuraciones/db');
 const Cliente = db.define(
-    "clientes",
-    {
-        Id:{
-            type:sequelize.INTEGER,
+    "cliente", {
+        IdCliente: {
+            type: sequelize.INTEGER,
             primaryKey: true,
             autoIncrement: true,
             allowNull: false,
         },
-        Nombre:{
-            type: sequelize.STRING(45),
+        NombreCliente: {
+            type: sequelize.STRING(150),
             allowNull: false,
         },
-        Apellido:{
-            type: sequelize.STRING(45),
+        ApellidoCliente: {
+            type: sequelize.STRING(150),
             allowNull: false,
         },
-        Telefono:{
-            type: sequelize.STRING(45),
+        TelefonoCliente: {
+            type: sequelize.STRING(8),
             allowNull: false,
         },
-        IdDireccion:{
+        IdDireccion: {
             type: sequelize.INTEGER,
             allowNull: false,
         }
-    },
-    {
+    }, {
         tableName: "clientes",
         timestamps: false,
     }
 );
-module.exports=Cliente;
+module.exports = Cliente;
