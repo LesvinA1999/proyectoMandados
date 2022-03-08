@@ -13,6 +13,8 @@ app.use("/api/tipocomercios", require("./rutas/rutasTipoComercio"));
 app.use("/api/tipousuarios", require("./rutas/rutasTipoUsuarios"));
 app.use("/api/usuarios", require("./rutas/rutasUsuarios"));
 app.use("/api/empleados", require("./rutas/rutasEmpleados"));
+app.use("/api/pedidos", require("./rutas/rutasPedidos"));
+app.use("/api/detallePedidos", require("./rutas/rutasDetallePedido"));
 app.listen(7000, () => {
     console.log("Servidor iniciado en el puerto 7000");
 });

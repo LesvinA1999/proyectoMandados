@@ -1,6 +1,6 @@
 const { request } = require('express');
 const { is } = require('express/lib/request');
-const ModeloCliente = require('../modelos/modeloPedidos');
+const ModeloPedido = require('../modelos/modeloPedidos');
 
 exports.Inicio = (req, res) => {
     res.send("Modulo de pedidos pryecto programacion movil II");
@@ -16,12 +16,11 @@ exports.listarPedidos = async(req, res) => {
 };
 
 exports.guardar = async(req, res) => {
-    const { IdPedido, IdCliente, precioEnvio, IdEmpleado, IdDetallePedido, FechaPedido, EstadoPedido } = req.body;
-    if (!IdPedido || !IdCliente) {
+    const { IdCliente, precioEnvio, IdEmpleado, IdDetallePedido, FechaPedido, EstadoPedido } = req.body;
+    if (!IdCliente) {
         res.send("Ingrese los datos requeridos");
     } else {
         await ModeloPedido.create({
-                IdPedido: IdPedido,
                 IdCliente: IdCliente,
                 precioEnvio: precioEnvio,
                 IdEmpleado: IdEmpleado,
@@ -95,10 +94,7 @@ exports.eliminar = async(req, res) => {
                 })
                 .then((data) => {
                     console.log(data);
-                    if (data == 0) {
-                        res.send("registro eliminado");
-                    }
-
+                    res.send("registro eliminado");
                 })
                 .catch((error) => {
                     console.log(error);

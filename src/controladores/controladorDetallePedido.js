@@ -1,6 +1,6 @@
 const { request } = require('express');
 const { is } = require('express/lib/request');
-const ModeloCliente = require('../modelos/modeloDetallePedido');
+const ModeloDetallePedido = require('../modelos/modeloDetallePedido');
 
 exports.Inicio = (req, res) => {
     res.send("Modulo de Detalle Pedidos pryecto programacion movil II");
@@ -16,12 +16,11 @@ exports.listar = async(req, res) => {
 };
 
 exports.guardar = async(req, res) => {
-    const { IdDetallePedidos, Cantidad, subTotal, IdEstadoPedido, IdComercio, IdFacctura } = req.body;
-    if (!IdDetallePedidos) {
+    const { Cantidad, subTotal, IdEstadoPedido, IdComercio, IdFacctura } = req.body;
+    if (!Cantidad || !IdComercio || !IdFacctura) {
         res.send("Ingrese los datos requeridos");
     } else {
         await ModeloDetallePedido.create({
-                IdDetallePedidos: IdDetallePedidos,
                 Cantidad: Cantidad,
                 subTotal: subTotal,
                 IdEstadoPedido: IdEstadoPedido,
@@ -41,20 +40,20 @@ exports.guardar = async(req, res) => {
 };
 
 exports.modificar = async(req, res) => {
-    const { IdDetallePedidos } = req.query;
+    const { IdDetallePedido } = req.query;
     const { Cantidad, subTotal, IdEstadoPedido, IdComercio, IdFacctura } = req.body;
-    if (!IdDetallePedidos || !Cantidad || !subTotal || !IdEstadoPedido || !IdComercio || !IdFacctura ) {
+    if (!IdDetallePedido || !Cantidad || !subTotal || !IdEstadoPedido || !IdComercio || !IdFacctura) {
         res.send("Ingrese datos completos");
     } else {
         var buscarDetallePedido = await ModeloDetallePedido.findOne({
             where: {
-                IdDetallePedidos: IdDetallePedidos,
+                IdDetallePedido: IdDetallePedido,
             }
         });
         if (!buscarDetallePedido) {
             res.send("No existe id");
         } else {
-            buscarDetallePedido.IdDetallePedidos = IdDetallePedidos;
+            buscarDetallePedido.IdDetallePedido = IdDetallePedido;
             buscarDetallePedido.Cantidad = Cantidad;
             buscarDetallePedido.subTotal = subTotal;
             buscarDetallePedido.IdEstadoPedido = IdEstadoPedido;
@@ -75,13 +74,13 @@ exports.modificar = async(req, res) => {
 };
 
 exports.eliminar = async(req, res) => {
-    const { IdDetallePedidos } = req.query;
-    if (!IdDetallePedidos) {
+    const { IdDetallePedido } = req.query;
+    if (!IdDetallePedido) {
         res.send("Ingrese id de registro");
     } else {
         var buscarDetallePedido = await ModeloDetallePedido.findOne({
             where: {
-                IdDetallePedidos: IdDetallePedidos,
+                IdDetallePedido: IdDetallePedido,
             }
         });
         if (!buscarDetallePedido) {
@@ -89,15 +88,11 @@ exports.eliminar = async(req, res) => {
         } else {
             await ModeloDetallePedido.destroy({
                     where: {
-                        IdDetallePedidos: IdDetallePedidos,
+                        IdDetallePedido: IdDetallePedido,
                     }
                 })
                 .then((data) => {
-                    console.log(data);
-                    if (data == 0) {
-                        res.send("registro eliminado");
-                    }
-
+                    res.send("registro eliminado");
                 })
                 .catch((error) => {
                     console.log(error);

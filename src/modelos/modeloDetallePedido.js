@@ -1,6 +1,6 @@
 const sequelize = require('sequelize');
 const db = require('../configuraciones/db');
-const Cliente = db.define(
+const DetallePedido = db.define(
     "pedido", {
         IdDetallePedido: {
             type: sequelize.INTEGER,
@@ -16,7 +16,7 @@ const Cliente = db.define(
             type: sequelize.DECIMAL(10),
             allowNull: false,
         },
-        IdEstadoEmpleado: {
+        IdEstadoPedido: {
             type: sequelize.INTEGER,
             allowNull: false,
         },
@@ -25,7 +25,7 @@ const Cliente = db.define(
             allowNull: false,
         },
         IdFacctura: {
-            type: sequelize.DATE,
+            type: sequelize.INTEGER,
             allowNull: false,
         }
 

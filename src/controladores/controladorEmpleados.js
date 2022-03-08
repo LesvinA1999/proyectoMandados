@@ -91,9 +91,8 @@ exports.eliminar = async(req, res) => {
                     }
                 })
                 .then((data) => {
-
+                    console.log(data);
                     res.send("registro eliminado");
-
                 })
                 .catch((error) => {
                     console.log(error);

@@ -84,10 +84,7 @@ exports.eliminar = async(req, res) => {
                 })
                 .then((data) => {
                     console.log(data);
-                    if (data == 0) {
-                        res.send("registro eliminado");
-                    }
-
+                    res.send("registro eliminado");
                 })
                 .catch((error) => {
                     console.log(error);

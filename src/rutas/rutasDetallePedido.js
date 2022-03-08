@@ -3,7 +3,7 @@ const controladorDetallePedido = require('../controladores/controladorDetallePed
 const router = Router();
 
 router.get('/', controladorDetallePedido.Inicio);
-router.get('/listar', controladorDetallePedido.listarDetallePedido);
+router.get('/listar', controladorDetallePedido.listar);
 router.post('/guardar', controladorDetallePedido.guardar);
 router.put('/modificar', controladorDetallePedido.modificar);
 router.delete('/eliminar', controladorDetallePedido.eliminar);
