@@ -16,15 +16,15 @@ exports.listarClientes = async(req, res) => {
 };
 
 exports.guardar = async(req, res) => {
-    const { NombreCliente, ApellidoCliente, TelefonoCliente, IdDireccion } = req.body;
-    if (!NombreCliente || !ApellidoCliente) {
+    const { NombreCliente, ApellidoCliente, TelefonoCliente, Direccion } = req.body;
+    if (!NombreCliente || !ApellidoCliente || !Direccion) {
         res.send("Ingrese los datos requeridos");
     } else {
         await ModeloCliente.create({
                 NombreCliente: NombreCliente,
                 ApellidoCliente: ApellidoCliente,
                 TelefonoCliente: TelefonoCliente,
-                IdDireccion: IdDireccion
+                Direccion: Direccion
             })
             .then((data) => {
                 console.log(data);
@@ -40,8 +40,8 @@ exports.guardar = async(req, res) => {
 
 exports.modificar = async(req, res) => {
     const { IdCliente } = req.query;
-    const { NombreCliente, ApellidoCliente, TelefonoCliente, IdDireccion } = req.body;
-    if (!IdCliente || !NombreCliente || !ApellidoCliente || !TelefonoCliente || !IdDireccion) {
+    const { NombreCliente, ApellidoCliente, TelefonoCliente, Direccion } = req.body;
+    if (!IdCliente || !NombreCliente || !ApellidoCliente || !TelefonoCliente || !Direccion) {
         res.send("Ingrese datos completos");
     } else {
         var buscarCliente = await ModeloCliente.findOne({
@@ -55,7 +55,7 @@ exports.modificar = async(req, res) => {
             buscarCliente.NombreCliente = NombreCliente;
             buscarCliente.ApellidoCliente = ApellidoCliente;
             buscarCliente.TelefonoCliente = TelefonoCliente;
-            buscarCliente.IdDireccion = IdDireccion;
+            buscarCliente.Direccion = Direccion;
 
             await buscarCliente.save()
                 .then((data) => {
