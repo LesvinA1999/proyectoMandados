@@ -20,9 +20,13 @@ const Cliente = db.define(
             type: sequelize.STRING(8),
             allowNull: false,
         },
-        IdDireccion: {
+        Direccion: {
             type: sequelize.INTEGER,
             allowNull: false,
+        },
+        Idusuario: {
+            type: sequelize.INTEGER,
+            allowNull: false
         }
     }, {
         tableName: "clientes",

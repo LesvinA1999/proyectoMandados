@@ -28,12 +28,13 @@ CREATE TABLE `clientes` (
   `IdCliente` int NOT NULL AUTO_INCREMENT,
   `NombreCliente` varchar(150) NOT NULL,
   `ApellidoCliente` varchar(150) NOT NULL,
-  `TelefonoCliente` varchar(8) NOT NULL,
-  `IdDireccion` int NOT NULL,
+  `TelefonoCliente` varchar(8) DEFAULT NULL,
+  `Direccion` varchar(200) NOT NULL,
+  `Idusuario` int NOT NULL,
   PRIMARY KEY (`IdCliente`),
-  KEY `IdDireccion_idx` (`IdDireccion`),
-  CONSTRAINT `IdDireccion` FOREIGN KEY (`IdDireccion`) REFERENCES `direccion` (`IdDireccion`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `usuario_idx` (`Idusuario`),
+  CONSTRAINT `usuario` FOREIGN KEY (`Idusuario`) REFERENCES `usuarios` (`Idusuario`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,6 +43,7 @@ CREATE TABLE `clientes` (
 
 LOCK TABLES `clientes` WRITE;
 /*!40000 ALTER TABLE `clientes` DISABLE KEYS */;
+INSERT INTO `clientes` VALUES (13,'Jose','Martinez','9568545','colonia',11);
 /*!40000 ALTER TABLE `clientes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -113,7 +115,7 @@ CREATE TABLE `direccion` (
   `IdDireccion` int NOT NULL AUTO_INCREMENT,
   `Descripcion` varchar(400) NOT NULL,
   PRIMARY KEY (`IdDireccion`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -122,6 +124,7 @@ CREATE TABLE `direccion` (
 
 LOCK TABLES `direccion` WRITE;
 /*!40000 ALTER TABLE `direccion` DISABLE KEYS */;
+INSERT INTO `direccion` VALUES (1,'Colonia Montecarlo Choluteca');
 /*!40000 ALTER TABLE `direccion` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -137,12 +140,11 @@ CREATE TABLE `empleado` (
   `NombreEmpleado` varchar(150) NOT NULL,
   `ApellidoEmpleado` varchar(150) NOT NULL,
   `TelefonoEmpleado` int NOT NULL,
-  `CorreoEmpleado` varchar(50) DEFAULT NULL,
   `Idusuario` int NOT NULL,
   PRIMARY KEY (`IdEmpleado`),
   KEY `Idusuario_idx` (`Idusuario`),
   CONSTRAINT `Idusuario` FOREIGN KEY (`Idusuario`) REFERENCES `usuarios` (`Idusuario`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -151,6 +153,7 @@ CREATE TABLE `empleado` (
 
 LOCK TABLES `empleado` WRITE;
 /*!40000 ALTER TABLE `empleado` DISABLE KEYS */;
+INSERT INTO `empleado` VALUES (12,'Kevin','Hernandez',95658989,2);
 /*!40000 ALTER TABLE `empleado` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -276,7 +279,7 @@ CREATE TABLE `tipousuario` (
   `IdTipoUsuario` int NOT NULL AUTO_INCREMENT,
   `DescripcionTipo` varchar(250) NOT NULL,
   PRIMARY KEY (`IdTipoUsuario`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -285,6 +288,7 @@ CREATE TABLE `tipousuario` (
 
 LOCK TABLES `tipousuario` WRITE;
 /*!40000 ALTER TABLE `tipousuario` DISABLE KEYS */;
+INSERT INTO `tipousuario` VALUES (1,'Administrador');
 /*!40000 ALTER TABLE `tipousuario` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -298,12 +302,10 @@ DROP TABLE IF EXISTS `usuarios`;
 CREATE TABLE `usuarios` (
   `Idusuario` int NOT NULL AUTO_INCREMENT,
   `Usuario` varchar(100) NOT NULL,
-  `Contrasena` varchar(50) NOT NULL,
-  `IdTipoUsuario` int NOT NULL,
-  PRIMARY KEY (`Idusuario`),
-  KEY `IdTipoUsuario_idx` (`IdTipoUsuario`),
-  CONSTRAINT `IdTipoUsuario` FOREIGN KEY (`IdTipoUsuario`) REFERENCES `tipousuario` (`IdTipoUsuario`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  `Contrasena` varchar(200) NOT NULL,
+  `IdTipoUsuario` varchar(200) NOT NULL,
+  PRIMARY KEY (`Idusuario`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -312,6 +314,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
+INSERT INTO `usuarios` VALUES (11,'noramartinez1466@gmail.com','$2b$10$GuX3Klb43hOMULkA/.gcWOdCnn/NEnqARv7nXgVtDRwJtmvtKXxSK','1');
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -324,4 +327,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-02-19 11:55:17
+-- Dump completed on 2022-03-10 18:09:26

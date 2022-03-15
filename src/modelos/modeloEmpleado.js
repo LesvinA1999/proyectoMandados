@@ -20,10 +20,6 @@ const Empleado = db.define(
             type: sequelize.INTEGER,
             allowNull: false,
         },
-        CorreoEmpleado: {
-            type: sequelize.STRING(150),
-            allowNull: true,
-        },
         Idusuario: {
             type: sequelize.INTEGER,
             allowNull: false

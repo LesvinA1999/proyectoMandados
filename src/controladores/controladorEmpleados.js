@@ -16,7 +16,7 @@ exports.listarEmpleados = async(req, res) => {
 };
 
 exports.guardar = async(req, res) => {
-    const { NombreEmpleado, ApellidoEmpleado, TelefonoEmpleado, CorreoEmpleado, Idusuario } = req.body;
+    const { NombreEmpleado, ApellidoEmpleado, TelefonoEmpleado, Idusuario } = req.body;
     if (!NombreEmpleado || !ApellidoEmpleado || !Idusuario) {
         res.send("Ingrese los datos requeridos");
     } else {
@@ -24,7 +24,6 @@ exports.guardar = async(req, res) => {
                 NombreEmpleado: NombreEmpleado,
                 ApellidoEmpleado: ApellidoEmpleado,
                 TelefonoEmpleado: TelefonoEmpleado,
-                CorreoEmpleado: CorreoEmpleado,
                 Idusuario: Idusuario
             })
             .then((data) => {
@@ -41,7 +40,7 @@ exports.guardar = async(req, res) => {
 
 exports.modificar = async(req, res) => {
     const { IdEmpleado } = req.query;
-    const { NombreEmpleado, ApellidoEmpleado, TelefonoEmpleado, CorreoEmpleado, Idusuario } = req.body;
+    const { NombreEmpleado, ApellidoEmpleado, TelefonoEmpleado, Idusuario } = req.body;
     if (!IdEmpleado || !NombreEmpleado || !ApellidoEmpleado || !Idusuario) {
         res.send("Ingrese datos completos");
     } else {
@@ -56,7 +55,6 @@ exports.modificar = async(req, res) => {
             buscarEmpleado.NombreEmpleado = NombreEmpleado;
             buscarEmpleado.ApellidoEmpleado = ApellidoEmpleado;
             buscarEmpleado.TelefonoEmpleado = TelefonoEmpleado;
-            buscarEmpleado.CorreoEmpleado = CorreoEmpleado;
             buscarEmpleado.Idusuario = Idusuario;
 
             await buscarEmpleado.save()
