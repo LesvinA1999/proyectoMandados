@@ -1,5 +1,6 @@
 const sequelize = require('sequelize');
 const db = require('../configuraciones/db');
+const bcrypt = require('bcrypt');
 const Cliente = db.define(
     "cliente", {
         IdCliente: {
@@ -21,20 +22,43 @@ const Cliente = db.define(
             allowNull: true,
         },
         Direccion: {
-<<<<<<< HEAD
-            type: sequelize.INTEGER,
-=======
             type: sequelize.STRING(200),
->>>>>>> aab03aedfb89ae3e48fab1eef69d22a58f71bddf
             allowNull: false,
         },
-        Idusuario: {
-            type: sequelize.INTEGER,
-            allowNull: false
-        }
-    }, {
+        Usuario: {
+            type: sequelize.STRING(100),
+            allowNull: false,
+        },
+        Contrasena: {
+            type: sequelize.STRING(200),
+            allowNull: false,
+        },
+        TipoUsuario: {
+            type: sequelize.STRING(200),
+            allowNull: true,
+        },
+        EstadoUsuario: {
+            type: sequelize.ENUM('AC', 'IN', 'BL'),
+            allowNull: true,
+            defaultValue: 'AC',
+        },
+    }, 
+    {
         tableName: "clientes",
         timestamps: false,
+        hooks:{
+            beforeCreate(cliente){
+                const hast = bcrypt.hashSync(cliente.Contrasena, 10);
+                cliente.Contrasena = hast;
+            },
+            beforeUpdate(cliente){
+                const hast = bcrypt.hashSync(cliente.Contrasena, 10);
+                cliente.Contrasena = hast;
+            }
+        }
     }
 );
+Cliente.prototype.VerificarContra = (con, com) =>{
+    return bcrypt.compareSync(con, com);
+}
 module.exports = Cliente;
